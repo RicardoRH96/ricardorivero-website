@@ -1,0 +1,548 @@
+/* ------------------------- */
+/* Estilos Generales */
+/* ------------------------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0; 
+    padding: 0;
+}
+
+body { 
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.texto-naranja {
+    font-weight: 400;
+    color: orange;
+}
+
+.texto-blanco {
+    font-weight: 700;
+    color: #fff;
+}
+
+.texto-negro {
+	color: #000;
+    font-size: 'Atkinson Hyperlegible', sans-serif;
+}
+
+/* FullPage.js */
+#fp-nav ul li a span{
+    background: orange;
+}
+
+#fp-nav ul li .fp-tooltip{
+    color: orange;
+}
+
+/* Navigation menu */
+.nav{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 70;
+    width: 100%;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.nav li,
+.nav a {
+    display: inline-block;
+    margin: 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+    color: #c2c2c2;
+    transition: 0.5s ease;
+}
+
+.nav li.active{
+    border-bottom: 2px solid orange;
+}
+
+.menu li a {
+    transition: 0.5s ease;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li.active a,
+.menu li:hover a {
+    color: orange;
+}
+
+.header{
+    background: url(../media/bg-imagen.jpeg);
+    background-position: center;
+}
+
+.header .contenedor-titulo{
+    text-align: center;
+    position: relative;
+    z-index: 99;
+}
+
+.header .titulo {
+    font: 70px;
+    text-transform: uppercase;
+}
+
+.header .contenedor-icono {
+    position: absolute;
+    z-index: 99;
+    bottom: 3%;
+    left: 50%;
+    font-size: 40px;
+    animation: bajar-subir 1s ease infinite
+}
+.bg-video{
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center;
+    background-size: contain;
+    object-fit: cover;
+
+}
+
+/* Animation */
+@keyframes bajar-subir {
+    0% {transform: translateY(20px); }
+    25% {transform: translateY(0);}
+    100% {transform: translateY(20px);}
+}
+
+/* Products */  
+.productos article {
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+.productos article:nth-child(1){
+    background-image: url('../media/header_photo2.jpeg');
+}
+.productos article:nth-child(2){
+    background-image: url('../media/header_photo.jpg');
+}
+.productos article:nth-child(3){
+    background-image: url('../media/header_photo3.jpeg');
+}
+.productos article:nth-child(4){
+    background-image: url('../media/DENV_Logistic.jpeg');
+}
+
+
+.productos .informacion-producto{
+    margin: 0 30px;
+
+}
+
+.productos .informacion-producto .modelo {
+    position: absolute;
+    z-index: 99;
+}
+
+.productos .informacion-producto .texto-naranja{
+    font-family: 'Oswald', sans-serif;
+}
+.productos .informacion-producto .texto-negro {
+    width: 50%;
+    float: left;
+    color: white;
+    text-align: justify;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.productos .informacion-producto::before{
+    content: "";
+    height: 50px;
+    width: 2px ;
+    display: inline-block;
+    background:orange;
+    position: absolute;
+    top: 50%;
+    margin: -10px;
+    z-index: 99;
+}
+
+.productos .modelo{
+    font-size: 45px;
+}
+
+.productos .descripcion{
+    font-size: 22px;
+}
+
+.productos .precio{
+    font-size: 25px;
+}
+
+.productos .precio::before {
+    content:"$";
+    display: inline-block;
+}
+
+/* fullPage.js classes for slide */
+.fp-controlArrow.fp-next,
+.fp-controlArrow.fp-prev {
+    top: 95%;
+}
+
+.fp-controlArrow.fp-prev {
+    left: 80%;
+    border-width: 20px 20px 20px 0;
+    border-color: transparent black transparent;
+
+}
+
+.fp-controlArrow.fp-next {
+    right: 50px;
+    border-width: 20px 0px 20px 20px;
+    border-color: transparent transparent transparent black;
+}
+
+
+/* Research */
+.research article {
+    background-position: center;
+    background-size: cover;
+}
+
+.research article:nth-child(1){
+    background-image: url('../media/header_photo2.jpeg');
+}
+.research article:nth-child(2){
+    background-image: url('../media/header_photo.jpg');
+}
+.research article:nth-child(3){
+    background-image: url('../media/header_photo3.jpeg');
+}
+.research article:nth-child(4){
+    background-image: url('../media/DENV_Logistic.jpeg');
+}
+
+.research .informacion-producto{
+    margin: 0 30px;
+
+}
+
+.research .informacion-producto .modelo {
+    position: absolute;
+    z-index: 99;
+}
+
+.research .informacion-producto .texto-naranja{
+    font-family: 'Oswald', sans-serif;
+}
+.research .informacion-producto .texto-negro {
+    width: 50%;
+    float: left;
+    color: white;
+    text-align: justify;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.research .informacion-producto::before{
+    content: "";
+    height: 50px;
+    width: 2px ;
+    display: inline-block;
+    background:orange;
+    position: absolute;
+    top: 50%;
+    margin: -10px;
+    z-index: 99;
+}
+
+.research .modelo{
+    font-size: 45px;
+}
+
+.research .descripcion{
+    font-size: 22px;
+}
+
+.research .precio{
+    font-size: 25px;
+}
+
+.research .precio::before {
+    content:"$";
+    display: inline-block;
+}
+
+/* Projects */
+/* Products */  
+.projects article {
+    background-position: center;
+    background-size: cover;
+}
+
+.projects article:nth-child(1){
+    background-image: url('../media/header_photo2.jpeg');
+}
+.projects article:nth-child(2){
+    background-image: url('../media/header_photo.jpg');
+}
+.projects article:nth-child(3){
+    background-image: url('../media/header_photo3.jpeg');
+}
+.projects article:nth-child(4){
+    background-image: url('../media/DENV_Logistic.jpeg');
+}
+
+.projects .informacion-producto{
+    margin: 0 30px;
+
+}
+
+.projects .informacion-producto .modelo {
+    position: absolute;
+    z-index: 99;
+}
+
+.projects .informacion-producto .texto-naranja{
+    font-family: 'Oswald', sans-serif;
+}
+.projects .informacion-producto .texto-negro {
+    width: 50%;
+    float: left;
+    color: white;
+    text-align: justify;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.projects .informacion-producto::before{
+    content: "";
+    height: 50px;
+    width: 2px ;
+    display: inline-block;
+    background:orange;
+    position: absolute;
+    top: 50%;
+    margin: -10px;
+    z-index: 99;
+}
+
+.projects .modelo{
+    font-size: 45px;
+}
+
+.projects .descripcion{
+    font-size: 22px;
+}
+
+.projects .precio{
+    font-size: 25px;
+}
+
+.projects .precio::before {
+    content:"$";
+    display: inline-block;
+}
+
+
+/* Footer */
+.footer {
+    background-color: black;
+}
+.footer .texto-naranja {
+    text-transform: uppercase;
+    font-size: 60px;
+    letter-spacing: 2px;
+    margin: 40px;
+}
+
+.footer h2 {
+    font-family: 'Oswald', sans-serif;
+    transition: 1s ease all;
+}
+
+.footer .redes-sociales {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-size: 50px;
+}
+
+.footer .redes-sociales a {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    background: white;
+    color: #30313A;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    margin: 0px 20px;
+}
+
+.footer .github i{
+    color: #171515;
+}
+.footer .twitter i{
+    color: #1da1f2;
+}
+.footer .instagram i{
+    color: #c13584;
+}
+.footer .researchgate i{
+    color: #0cb;
+}
+.footer .linkedin i{
+    color: #0073b0;
+}
+.footer .mail i{
+    color: #333;
+}
+.footer .scholar i{
+    color: #4285f4;
+}
+
+
+
+.footer .github:hover{
+    background: #171515;
+}
+.footer .twitter:hover{
+    background: #1da1f2;
+}
+.footer .instagram:hover{
+    background: #c13584;
+}
+.footer .researchgate:hover {
+    background: #0cb;
+}
+.footer .linkedin:hover {
+    background: #0073b0;
+}
+.footer .mail:hover {
+    background: #333
+}
+.footer .scholar:hover {
+    background: #4285F4
+}
+
+
+
+
+.footer .github:hover i{
+    color: white;
+}
+.footer .twitter:hover i{
+    color: white;
+}
+.footer .instagram:hover i{
+    color: white;
+}
+.footer .researchgate:hover i{
+    color: white;
+}
+.footer .linkedin:hover i{
+    color: white
+}
+.footer .mail:hover i{
+    color: white;
+}
+.footer .scholar:hover i{
+    color: white;
+}
+
+
+/* Media queries for responsive design */
+ @media  screen and (max-width: 768px) {
+    .menu li a,
+    .menu li.active a {
+        font-size: 18px;
+    }
+    .modelo {
+        font-size: 40px;
+    }
+    .precio {
+        font-size: 23px;
+    }
+    .footer h2 {
+        font-size: 15px;
+    }
+    .footer .redes-sociales {
+        font-size: 30px;
+    }
+    .footer .redes-sociales a{
+        width: 70px;
+        height: 70px;   
+    }
+    .footer .texto-naranja {
+       font-size: 40px; 
+    }
+ }
+
+ @media screen and (max-width: 576px) {
+    .header .titulo {
+        font-size: 60px;
+    }
+    .informacion-producto {
+        position: absolute;
+        top: 70%;
+    }
+
+    .fp-controlArrow.fp-next {
+        left: 100px;
+    }
+    .fp-controlArrow.fp-prev {
+        left: 25px;
+    }
+ }
+ 
+
+ @media screen and (max-width: 450px) {
+    .nav {
+        display: block;
+        text-align: center;
+    }
+    .nav a {
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+    .menu {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .menu li a,
+    .menu li.active a {
+        font-size: 15px;
+        padding: 5px;
+    }
+    .titulo {
+        font-size: 45px;
+    }
+    .productos .modelo {
+        font-size: 30px;
+    }
+    .footer .texto-naranja {
+        font-size: 18px;
+    }
+    .footer .redes-sociales a {
+        width: 50px;
+        height: 50px;
+    }
+    .footer .redes-sociales a i {
+        font-size: 24px;
+    }    
+ }
