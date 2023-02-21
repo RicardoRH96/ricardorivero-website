@@ -546,3 +546,12 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 24px;
     }    
  }
+
+ .footer .icon-link {
+    position: fixed;
+    top: 90%;
+    justify-content:left;
+    color: white;
+    text-decoration: none !important;
+    font-size: 12px;
+ }
