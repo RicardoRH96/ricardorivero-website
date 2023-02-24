@@ -198,6 +198,14 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
+.productos .informacion-producto .texto-negro-data {
+    width: 50%;
+    float: left;
+    color: black;
+    text-align: justify;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
 .productos .informacion-producto::before{
     content: "";
     height: 50px;
@@ -325,13 +333,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .projects article:nth-child(1){
-    background-image: url('../media/header_photo2.jpeg');
+    background-image: url('../media/bat-image.jpeg');
 }
 .projects article:nth-child(2){
-    background-image: url('../media/header_photo.jpg');
+    background-image: url('../media/dengue_mosquito.jpeg');
 }
 .projects article:nth-child(3){
-    background-image: url('../media/header_photo3.jpeg');
+    background-image: url('../media/header_photo.jpg');
 }
 .projects article:nth-child(4){
     background-image: url('../media/DENV_Logistic.jpeg');
@@ -356,6 +364,7 @@ h1, h2, h3, h4, h5, h6 {
     color: white;
     text-align: justify;
     font-family: 'Atkinson Hyperlegible', sans-serif;
+    text-decoration: none;
 }
 
 .projects .informacion-producto::before{
@@ -387,25 +396,26 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
-.projects .nextstrain {
-    position: relative;
-    width: 50%;
-    left: 50%;
-    height: 800px;
-    border: 1px solid black;
-    top: 10%;
-}
-
-.projects .texto-naranja-side {
+.projects .informacion-producto .nextstrain {
     position: absolute;
     width: 50%;
-    float: left;
+    height: 800px;
+    border: 1px solid black;
+    top: 5%;
 }
 
-.projects .texto-negro-research {
-    width: 50%;
+
+.projects  .informacion-producto .texto-negro-research {
+    width: 20%;
     bottom: 20%;
-    float: left;
+    float: right;
+    color: white;
+}
+
+.projects .informacion-producto .texto-naranja-side {
+    font-size: 40px;
+    width: 20%;
+    float: right;
 }
 
 /* Footer */
