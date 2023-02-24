@@ -21,7 +21,17 @@ h1, h2, h3, h4, h5, h6 {
 .texto-naranja {
     font-weight: 400;
     color: orange;
+    text-decoration: none;
 }
+
+.texto-naranja-side {
+    font-weight: 400;
+    color: orange;
+    width: 50%;
+    float: left;
+    text-align: justify;
+}
+
 
 .texto-blanco {
     font-weight: 700;
@@ -31,6 +41,26 @@ h1, h2, h3, h4, h5, h6 {
 .texto-negro {
 	color: #000;
     font-size: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.texto-negro-research {
+    color: black;
+    font-family:'Atkinson Hyperlegible', sans-serif;
+    font-size: 16px;
+    left: 0;
+    top: 0;
+    width: 600px;
+    padding-left: 20px;
+    text-align: justify;
+}
+
+.texto-negro-bold {
+    color: black;
+    font-family:'Atkinson Hyperlegible', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    width: 50%;
+    float: left;
 }
 
 /* FullPage.js */
@@ -82,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header{
-    background: url(../media/bg-imagen.jpeg);
+    background: black;
     background-position: center;
 }
 
@@ -219,21 +249,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Research */
 .research article {
-    background-position: center;
+    background-position: right;
     background-size: cover;
 }
 
 .research article:nth-child(1){
-    background-image: url('../media/header_photo2.jpeg');
+    background-image: url('../media/Genomic_epi_abstract.png');
+
 }
 .research article:nth-child(2){
-    background-image: url('../media/header_photo.jpg');
+    background-image: url('../media/human_dog_abstract.png');
 }
 .research article:nth-child(3){
-    background-image: url('../media/header_photo3.jpeg');
+    background-image: url('../media/cross-react_abstract.png');
 }
 .research article:nth-child(4){
-    background-image: url('../media/DENV_Logistic.jpeg');
+    background-image: url('../media/more_research.jpg');
 }
 
 .research .informacion-producto{
@@ -356,6 +387,26 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
+.projects .nextstrain {
+    position: relative;
+    width: 50%;
+    left: 50%;
+    height: 800px;
+    border: 1px solid black;
+    top: 10%;
+}
+
+.projects .texto-naranja-side {
+    position: absolute;
+    width: 50%;
+    float: left;
+}
+
+.projects .texto-negro-research {
+    width: 50%;
+    bottom: 20%;
+    float: left;
+}
 
 /* Footer */
 .footer {
