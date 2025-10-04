@@ -1,29 +1,45 @@
-var myFullpage = new fullpage('#fullpage',{
-    autoScrolling: true, // Se activa el scroll.
-    fitToSection: false, // Acomoda el scroll automaticamente para que la seccion se muestre en pantalla.
-    fitToSectionDelay: 300, // Delay antes de acomodar la seccion automaticamente.
-    easing: 'easeInOutCubic', // Funcion de tiempo de la animacion.
-    scrollingSpeed: 600, // Velocidad del scroll. Valores: en milisegundos.
-    css3: true, // Si usara CSS3 o javascript.
-    easingcss3: 'ease-out', // Curva de velocidad del efecto.
-    loopBottom: true, //
-    navigation: true, // Muesta la barra de navegación.
-    /* Navigation bar */
-    menu: '#menu', // Menu de navegación.
-    anchors: ['home','about', 'research', 'projects', 'contact'], // Anclas, las usamos para identificar cada seccion y poder acceder a ellas con el menu.
-    navigationTooltips: ['Home', 'About', 'Research', 'Projects', 'Contact me'], // Tooltips que mostrara por cada boton.
-    showActiveTooltip: true, // Mostrar tooltip activa.
-/* Sections */
-    sectionsColor : ['#000', '#c2c2c2', '#000'], // Color de fondo de cada seccion.
-    verticalCentered: true, // Si alineara de forma vertical los contenidos de cada seccion.
-/* Slide */
-    controlArrows: true, // Flechas del slide
-    slidesNavigation: true, // Indicadores del slide
-    afterLoad: function(origin, destination){
-        if(destination.anchor == 'contacto'){
-             document.querySelector('.footer h2').style.opacity = 1;
-        }
-   }
+document.addEventListener('DOMContentLoaded', function () {
+  const yearTarget = document.getElementById('year');
+  if (yearTarget) {
+    yearTarget.textContent = new Date().getFullYear();
+  }
+
+  if (!document.querySelector('#fullpage') || typeof fullpage === 'undefined') {
+    return;
+  }
+
+  new fullpage('#fullpage', {
+    licenseKey: 'gplv3-license',
+    autoScrolling: true,
+    fitToSection: true,
+    fitToSectionDelay: 450,
+    scrollingSpeed: 700,
+    easingcss3: 'cubic-bezier(0.83, 0, 0.17, 1)',
+    css3: true,
+    menu: '#menu',
+    anchors: ['home', 'about', 'papers', 'insights', 'tutorials', 'contact'],
+    navigation: true,
+    navigationPosition: 'right',
+    navigationTooltips: ['Home', 'About', 'Papers', 'Blogs', 'Tutorials', 'Contact'],
+    showActiveTooltip: true,
+    sectionSelector: '.section',
+    scrollOverflow: true,
+    credits: { enabled: false },
+    responsiveWidth: 940,
+    responsiveHeight: 680,
+    lazyLoading: true,
+    keyboardScrolling: true,
+    controlArrows: false,
+    afterLoad: function (origin, destination) {
+      const nav = document.querySelector('.nav');
+      if (!nav) {
+        return;
+      }
+      if (destination.anchor === 'home') {
+        nav.classList.remove('nav-solid');
+      } else {
+        nav.classList.add('nav-solid');
+      }
+    }
+  });
 });
-
-

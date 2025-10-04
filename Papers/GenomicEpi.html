@@ -1,89 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Detailed view of scientific paper by Ricardo Rivero"/>
-  <title>Genomic Epidemiology of SARS-CoV-2 in Colombia</title>
-  
-  <!-- Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Oswald&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <script src="https://kit.fontawesome.com/978654bfa5.js" crossorigin="anonymous"></script>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../css/estilos.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Overview of the genomic epidemiology of circulating SARS-CoV-2 variants in Colombia.">
+  <title>Genomic Epidemiology · Colombia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    main {
-      padding: 40px;
-      max-width: 900px;
-      margin: 0 auto;
+    :root {
+      --bg: #050a16;
+      --card: rgba(15, 23, 42, 0.92);
+      --border: rgba(148, 163, 184, 0.24);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #f97316;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Lato', sans-serif;
-      color: #fff;
-      background-color: #000;
+      background: radial-gradient(circle at top, #101a30 0%, var(--bg) 100%);
+      color: var(--text);
+      padding: 40px 20px;
     }
-
+    main {
+      width: min(920px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: clamp(32px, 5vw, 54px);
+      box-shadow: 0 40px 90px rgba(8, 13, 35, 0.55);
+    }
     h1 {
-      color: orange;
       font-family: 'Oswald', sans-serif;
-      font-size: 40px;
-      margin-bottom: 10px;
+      font-size: clamp(34px, 5vw, 50px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 12px;
     }
-
     .metadata {
-      color: #ccc;
-      font-size: 16px;
-      margin-bottom: 20px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
     }
-
+    .metadata a { color: var(--accent); text-decoration: none; }
+    .metadata a:hover { color: #fb923c; }
     p {
-      font-size: 18px;
-      line-height: 1.6;
-      text-align: justify;
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+      color: var(--muted);
     }
-
-    a {
-      color: orange;
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+    .actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 13px;
       text-decoration: none;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .primary {
+      background: var(--accent);
+      color: #0f172a;
+      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.25);
     }
-
-    .nav-back {
-      margin-top: 40px;
-      display: block;
-      text-align: center;
-      font-size: 18px;
+    .secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
     }
+    .secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 32px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .back-link:hover { color: var(--accent); }
   </style>
 </head>
 <body>
   <main>
-    <h1>Genomic Epidemiology of Circulating SARS-CoV-2 Variants</h1>
+    <h1>Genomic Epidemiology in Colombia</h1>
     <div class="metadata">
-      <strong>Authors:</strong> Cinthy Jimenez-Silva, Ricardo Rivero, et al.<br>
-      <strong>Journal:</strong> Communications Medicine (2022) <br>
-      <strong>DOI:</strong> <a href="https://doi.org/xxxxx" target="_blank">https://doi.org/xxxxx</a>
+      <strong>Journal:</strong> Communications Medicine (2022)<br>
+      <strong>Authors:</strong> Cinthy Jimenez-Silva, Ricardo Rivero-Herrera, et al.<br>
+      <strong>Focus:</strong> Nationwide genomic surveillance of 14,049 SARS-CoV-2 genomes.<br>
+      <strong>DOI:</strong> <a href="https://doi.org/10.1038/s43856-022-00181-w" target="_blank" rel="noopener">10.1038/s43856-022-00181-w</a>
     </div>
-
     <p>
-      The emergence of highly transmissible SARS-CoV-2 variants has led to surges in cases and the need for global genomic surveillance.
-      This study explores fine-scale phylodynamic and epidemiological patterns in Colombia using over 14,000 complete viral genomes.
-      We identify 188 lineages, analyze their introduction dates and effective reproductive numbers, and highlight the Mu variant’s high transmissibility.
+      We combined genomic surveillance and Bayesian phylodynamics to map the introduction and expansion of 188 SARS-CoV-2 lineages across the 32 departments of Colombia during the first two years of the pandemic. The analysis highlights how the Mu variant (B.1.621) rapidly displaced other variants locally while remaining limited abroad.
     </p>
-
     <p>
-      Using Bayesian coalescent modeling, we estimate the time to most recent common ancestor (tMRCA), changes in effective population size (Ne),
-      and the impact of interventions. The results reinforce the value of genomic surveillance as a critical tool for informing public health policy.
+      By estimating effective reproduction numbers, importation timing, and changes in effective population size, we characterized the trajectories of dominant lineages relative to national interventions. The work underscores the value of open genomic data pipelines for regional preparedness and response.
     </p>
-
     <p>
-      For full dataset and code used in this study, please refer to the <a href="https://github.com/RicardoRH96" target="_blank">project repository</a>.
+      Sequencing and analytics were coordinated alongside Colombia's genomic surveillance network, demonstrating how collaborative data sharing can surface hidden transmission routes and support public health decisions.
     </p>
-
-    <a href="../index.html#research" class="nav-back">← Back to Website</a>
+    <div class="actions">
+      <a class="primary" href="https://www.nature.com/articles/s43856-022-00181-w" target="_blank" rel="noopener">Read full article</a>
+      <a class="secondary" href="../blogs/genomic-epidemiology-mu-variant.html">Blog (In progress)</a>
+    </div>
+    <a class="back-link" href="../index.html#papers">← Back to papers</a>
   </main>
 </body>
 </html>

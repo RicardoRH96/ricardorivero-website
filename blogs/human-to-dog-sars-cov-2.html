@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Placeholder blog for the human-to-dog transmission of SARS-CoV-2 study.">
+  <title>Blog · Human-to-Dog Transmission of SARS-CoV-2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050a16;
+      --card: rgba(15, 23, 42, 0.9);
+      --border: rgba(148, 163, 184, 0.2);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #f97316;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lato', sans-serif;
+      background: radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.18), transparent 55%), radial-gradient(circle at top, #101a30 0%, var(--bg) 100%);
+      color: var(--text);
+      padding: 40px 20px;
+    }
+    main {
+      width: min(780px, 100%);
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: 32px;
+      padding: clamp(32px, 6vw, 56px);
+      text-align: center;
+      box-shadow: 0 36px 90px rgba(7, 12, 32, 0.5);
+    }
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.14);
+      color: var(--accent);
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .back-link:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="status">In progress</div>
+    <h1>When SARS-CoV-2 Jumped Species</h1>
+    <p>
+      I will soon share the field notes, sequencing results, and structural modelling insights that helped us document a human-to-dog transmission event in Colombia.
+    </p>
+    <p>
+      Expect takeaway frameworks for One Health investigations, communication assets, and code snippets you can reuse.
+    </p>
+    <a class="back-link" href="../index.html#insights">← Back to blogs</a>
+  </main>
+</body>
+</html>
