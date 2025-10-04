@@ -8,11 +8,25 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
+  const navLinks = document.querySelectorAll('#menu a, .marca');
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      var href = this.getAttribute('href');
+      if (!href || href.charAt(0) !== '#') {
+        return;
+      }
+      var anchor = href.replace('#', '');
+      if (anchor && typeof fullpage_api !== 'undefined') {
+        event.preventDefault();
+        fullpage_api.moveTo(anchor);
+      }
+    });
+  });
+
   new fullpage('#fullpage', {
     licenseKey: 'gplv3-license',
     autoScrolling: true,
-    fitToSection: true,
-    fitToSectionDelay: 450,
+    fitToSection: false,
     scrollingSpeed: 700,
     easingcss3: 'cubic-bezier(0.83, 0, 0.17, 1)',
     css3: true,
@@ -23,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     navigationTooltips: ['Home', 'About', 'Papers', 'Blogs', 'Tutorials', 'Contact'],
     showActiveTooltip: true,
     sectionSelector: '.section',
-    scrollOverflow: true,
+    scrollOverflow: false,
     credits: { enabled: false },
     responsiveWidth: 940,
     responsiveHeight: 680,

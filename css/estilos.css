@@ -10,7 +10,11 @@
   --nav-height: 72px;
   --radius-lg: 24px;
   --radius-md: 16px;
-  --shadow: 0 40px 80px rgba(0, 0, 0, 0.55);
+  --shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  --webkit-backdrop-filter: blur(13.3px);  
+  --nav-glass: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+  --nav-highlight: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 75%);
+  --nav-lowlight: linear-gradient(295deg, rgba(255, 255, 255, 0.04), transparent 50%);
 }
 
 * {
@@ -39,23 +43,47 @@ a:hover {
 
 .nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   height: var(--nav-height);
-  padding: 0 3.5vw;
+  width: min(1120px, calc(100% - 6vw));
+  padding: 0 clamp(18px, 3vw, 42px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(9, 13, 26, 0.8);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(18px);
+  background: var(--nav-glass);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.48);
   z-index: 100;
+  overflow: hidden;
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--nav-highlight), var(--nav-lowlight);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 18% 25%, rgba(255, 255, 255, 0.12), transparent 58%),
+              radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.08), transparent 60%);
+  opacity: 0.28;
+  pointer-events: none;
 }
 
 .nav.nav-solid {
-  background: rgba(9, 13, 26, 0.92);
-  box-shadow: 0 24px 40px rgba(8, 11, 22, 0.45);
+  background: linear-gradient(135deg, rgba(6, 6, 8, 0.95), rgba(0, 0, 0, 0.78));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.55);
 }
 
 .marca {
@@ -168,11 +196,16 @@ a:hover {
 .btn {
   background: var(--accent);
   color: #0f172a;
+  border: 1px solid transparent;
   box-shadow: 0 18px 40px rgba(249, 115, 22, 0.2);
 }
 
-.btn:hover {
-  background: #fb923c;
+.btn:hover,
+.btn:focus-visible {
+  background: rgba(249, 115, 22, 0.18);
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 18px 40px rgba(249, 115, 22, 0.1);
 }
 
 .btn-secondary {
@@ -423,6 +456,10 @@ a:hover {
 }
 
 @media (max-width: 960px) {
+  .nav {
+    width: calc(100% - 8vw);
+  }
+
   .menu {
     gap: 12px;
     flex-wrap: wrap;
@@ -442,9 +479,11 @@ a:hover {
   .nav {
     flex-direction: column;
     align-items: flex-start;
-    padding: 12px 5vw;
+    width: calc(100% - 24px);
+    padding: 14px 20px;
     height: auto;
     gap: 12px;
+    top: 10px;
   }
 
   .menu {
