@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guide to running SLURM-friendly Docker and Singularity workflows for scientific computing.">
+  <title>Docker Tutorial &middot; Ricardo Rivero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    body.article-page {
+      background: radial-gradient(circle at 18% -8%, rgba(249, 115, 22, 0.16), transparent 55%),
+        radial-gradient(circle at center, #050505 0%, #000 78%);
+      color: var(--text);
+    }
+    .tutorial-article {
+      padding: calc(var(--nav-height) + 48px) 24px 96px;
+      display: flex;
+      justify-content: center;
+    }
+    .tutorial-article article {
+      width: min(960px, 100%);
+      background: rgba(12, 12, 18, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: clamp(32px, 6vw, 60px);
+      box-shadow: 0 32px 80px rgba(5, 8, 18, 0.55);
+    }
+    .tutorial-article header {
+      margin-bottom: 32px;
+    }
+    .tutorial-article .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tutorial-article .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .tutorial-article h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .tutorial-article .lede {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .tutorial-article section + section {
+      margin-top: 42px;
+    }
+    .tutorial-article h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 3vw, 30px);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .tutorial-article h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(18px, 2.2vw, 22px);
+      letter-spacing: 0.04em;
+      margin: 26px 0 12px;
+    }
+    .tutorial-article p {
+      margin-bottom: 18px;
+      color: #e5e8f0;
+    }
+    .tutorial-article ol,
+    .tutorial-article ul {
+      margin: 0 0 20px 22px;
+      line-height: 1.7;
+      color: #e5e8f0;
+    }
+    .tutorial-article li + li {
+      margin-top: 6px;
+    }
+    .tutorial-article pre {
+      background: rgba(10, 14, 26, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 18px 20px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 18px 0 24px;
+    }
+    .tutorial-article code {
+      font-family: 'Source Code Pro', 'Fira Code', 'Courier New', monospace;
+      color: #f4f4f9;
+    }
+    .tutorial-article hr {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      margin: 34px 0;
+    }
+    .tutorial-article .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tutorial-article .back-link:hover {
+      color: var(--accent);
+    }
+    @media (max-width: 720px) {
+      .tutorial-article article {
+        border-radius: 18px;
+      }
+      .tutorial-article {
+        padding: calc(var(--nav-height) + 32px) 16px 72px;
+      }
+    }
+  </style>
+</head>
+<body class="article-page">
+  <nav class="nav nav-solid">
+    <a class="marca" href="../index.html#home">Ricardo Rivero</a>
+    <ul class="menu">
+      <li><a href="../index.html#home">Home</a></li>
+      <li class="active"><a href="../index.html#tutorials">Tutorials</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="tutorial-article">
+    <article>
+      <header>
+        <span class="eyebrow">Technical Tutorial</span>
+        <h1>Docker Tutorial: SLURM-Compatible Workflows with Docker, Singularity, and R/Python</h1>
+        <p class="lede">
+          Learn how to build a reproducible container, publish it to a registry, and execute it on a SLURM-managed HPC system with SingularityCE. Examples cover both Python and R stacks with an emphasis on portability, determinism, and thread hygiene on shared nodes.
+        </p>
+      </header>
+
+      <section id="why-containers">
+        <h2>1. Why containers for HPC?</h2>
+        <p>
+          Containers bundle your runtime (system libraries, compilers, interpreters) with your application dependencies. On HPC systems this prevents dependency drift and avoids requesting administrator installs. The recommended pattern is:
+        </p>
+        <ol>
+          <li>Build locally with Docker.</li>
+          <li>Publish to a registry such as Docker Hub.</li>
+          <li>Pull and run on the cluster with SingularityCE under SLURM.</li>
+        </ol>
+        <p>
+          This workflow yields a single, auditable source of truth for your environment.
+        </p>
+      </section>
+
+      <section id="prerequisites">
+        <h2>2. Prerequisites</h2>
+        <ul>
+          <li>Local machine with Docker installed.</li>
+          <li>An account on a container registry (for example Docker Hub).</li>
+          <li>HPC access with SingularityCE available (for example <code>module load singularity</code>).</li>
+          <li>SLURM for scheduling (<code>sbatch</code>, <code>srun</code>, and related commands).</li>
+          <li>If your development machine is ARM based (for example Apple Silicon), cross-build for <code>linux/amd64</code> so the image runs on typical x86_64 HPC nodes.</li>
+        </ul>
+      </section>
+
+      <section id="dockerfile">
+        <h2>3. Authoring the Dockerfile</h2>
+        <p>Below are the major sections of a Dockerfile suitable for Python or R geospatial and scientific workloads. Adjust packages to match your use case.</p>
+
+        <h3>3.1 Base image selection</h3>
+        <p>Python-first:</p>
+        <pre><code class="language-dockerfile">FROM python:3.12-slim</code></pre>
+
+        <p>R-first (binary CRAN via r2u):</p>
+        <pre><code class="language-dockerfile">FROM rocker/r2u:4.4</code></pre>
+
+        <p>
+          Notes:
+        </p>
+        <ul>
+          <li>Slim images are small and require you to add only what you need.</li>
+          <li>For predominantly R workflows, starting from a Rocker image reduces compilation friction.</li>
+        </ul>
+
+        <h3>3.2 Noninteractive APT</h3>
+        <pre><code class="language-dockerfile">ENV DEBIAN_FRONTEND=noninteractive</code></pre>
+        <p>Prevents prompts that can block unattended builds.</p>
+
+        <h3>3.3 System dependencies</h3>
+        <pre><code class="language-bash">RUN apt-get update &amp;&amp; \
+    apt-get install -y --no-install-recommends \
+        libgomp1 ca-certificates \
+        libgdal-dev gdal-bin libproj-dev proj-bin \
+        libgeos-dev libspatialindex-dev \
+        libexpat1 libexpat1-dev &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*</code></pre>
+        <ul>
+          <li><code>libgomp1</code> provides the OpenMP runtime used by BLAS and machine learning libraries.</li>
+          <li>GDAL, PROJ, and GEOS support <code>sf</code>, <code>terra</code>, and many Python GIS libraries.</li>
+        </ul>
+
+        <h3>3.4 Python packages</h3>
+        <pre><code class="language-bash">RUN python -m pip install --upgrade --no-cache-dir pip setuptools wheel
+RUN pip install --no-cache-dir \
+    numpy pandas pyarrow \
+    shapely&gt;=2 pyproj rtree \
+    fiona rasterio geopandas \
+    scikit-learn lightgbm xgboost scikit-optimize \
+    joblib tqdm requests pyimpute matplotlib</code></pre>
+        <p>
+          Prefer wheels to avoid compilers at build time. Pin exact versions via <code>requirements.txt</code> if needed.
+        </p>
+
+        <h3>3.5 R packages (optional)</h3>
+        <p>If using <code>rocker/r2u</code>, most CRAN packages are available as Debian binaries:</p>
+        <pre><code class="language-bash">RUN apt-get update &amp;&amp; \
+    apt-get install -y --no-install-recommends \
+        r-cran-data.table r-cran-dplyr r-cran-readr r-cran-ggplot2 \
+        r-cran-sf r-cran-terra r-cran-lwgeom r-cran-glue r-cran-pak \
+        r-cran-renv &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*</code></pre>
+        <p>On a generic R base image, use <code>pak</code> or <code>install2.r</code> with the Posit Package Manager binary mirror for fast installs.</p>
+
+        <h3>3.6 Threading and geospatial defaults</h3>
+        <pre><code class="language-bash">ENV OMP_NUM_THREADS=2 \
+    OPENBLAS_NUM_THREADS=2 \
+    MKL_NUM_THREADS=2 \
+    NUMEXPR_NUM_THREADS=2 \
+    XGBOOST_NUM_THREADS=1 \
+    PROJ_NETWORK=OFF \
+    GDAL_CACHEMAX=512</code></pre>
+        <ul>
+          <li>Caps threads to prevent oversubscription on shared nodes.</li>
+          <li>Disables PROJ network fetches for reproducibility.</li>
+          <li>Override these as needed in SLURM jobs.</li>
+        </ul>
+
+        <h3>3.7 Working directory</h3>
+        <pre><code class="language-dockerfile">WORKDIR /work</code></pre>
+        <p>Mount project code and data here at runtime.</p>
+      </section>
+
+      <section id="build-test">
+        <h2>4. Building and testing locally</h2>
+        <p>On your development machine:</p>
+        <pre><code class="language-bash">export IMG=scientific-pipeline
+export TAG=0.1.0
+export REPO=&lt;dockerhub_user&gt;/$IMG
+
+# one-time: buildx builder
+docker buildx create --use
+
+# Cross-build for HPC architecture (usually linux/amd64)
+docker buildx build \
+  --platform linux/amd64 \
+  -t $REPO:$TAG \
+  -t $REPO:latest \
+  --load .
+
+# Quick sanity check
+docker run --rm --platform linux/amd64 $REPO:$TAG \
+  python -c "import geopandas; print('Environment OK')"</code></pre>
+      </section>
+
+      <section id="publish">
+        <h2>5. Publishing to Docker Hub</h2>
+        <pre><code class="language-bash">docker login                     # enter credentials
+docker push $REPO:$TAG
+docker push $REPO:latest</code></pre>
+        <p>Optionally record the immutable digest:</p>
+        <pre><code class="language-bash">docker buildx imagetools inspect $REPO:$TAG</code></pre>
+      </section>
+
+      <section id="singularity">
+        <h2>6. Retrieving the image on the HPC with SingularityCE</h2>
+        <p>On the login node:</p>
+        <pre><code class="language-bash">module load singularity
+export IMG=scientific-pipeline
+export TAG=0.1.0
+export REPO=&lt;dockerhub_user&gt;/$IMG
+
+mkdir -p $PWD/.sif
+singularity pull --dir $PWD/.sif docker://$REPO:$TAG
+# =&gt; ./.sif/${IMG}_${TAG}.sif</code></pre>
+        <p>For private repositories:</p>
+        <pre><code class="language-bash">export SINGULARITY_DOCKER_USERNAME=&lt;dockerhub_user&gt;
+export SINGULARITY_DOCKER_PASSWORD=&lt;access_token_or_password&gt;
+singularity pull --dir $PWD/.sif docker://$REPO:$TAG</code></pre>
+        <p>Test the image:</p>
+        <pre><code class="language-bash">singularity exec ./.sif/${IMG}_${TAG}.sif \
+  python -c "import geopandas; print('Singularity OK')"</code></pre>
+      </section>
+
+      <section id="slurm">
+        <h2>7. Running containers under SLURM</h2>
+        <h3>7.1 Thread hygiene via environment forwarding</h3>
+        <p>Use <code>SINGULARITYENV_</code> prefixes so variables appear inside the container:</p>
+        <pre><code class="language-bash">export SINGULARITYENV_OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-2}
+export SINGULARITYENV_OPENBLAS_NUM_THREADS=$SINGULARITYENV_OMP_NUM_THREADS
+export SINGULARITYENV_MKL_NUM_THREADS=$SINGULARITYENV_OMP_NUM_THREADS
+export SINGULARITYENV_NUMEXPR_NUM_THREADS=$SINGULARITYENV_OMP_NUM_THREADS
+export SINGULARITYENV_XGBOOST_NUM_THREADS=$SINGULARITYENV_OMP_NUM_THREADS
+export SINGULARITYENV_PROJ_NETWORK=OFF
+export SINGULARITYENV_GDAL_CACHEMAX=1024</code></pre>
+
+        <h3>7.2 Batch script template (CPU)</h3>
+        <pre><code class="language-bash">#!/bin/bash -l
+#SBATCH --job-name=analysis
+#SBATCH --partition=compute
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --time=08:00:00
+#SBATCH --output=logs/%x-%j.out
+#SBATCH --error=logs/%x-%j.err
+
+module purge
+module load singularity
+
+SIF=./.sif/scientific-pipeline_0.1.0.sif
+PROJECT=/path/to/project         # contains src/process.py or script.R
+INPUTS=/path/to/inputs
+OUTPUTS=/path/to/outputs
+
+# Forward thread/env settings into container
+export SINGULARITYENV_OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
+export SINGULARITYENV_OPENBLAS_NUM_THREADS=${SINGULARITYENV_OMP_NUM_THREADS}
+export SINGULARITYENV_MKL_NUM_THREADS=${SINGULARITYENV_OMP_NUM_THREADS}
+export SINGULARITYENV_NUMEXPR_NUM_THREADS=${SINGULARITYENV_OMP_NUM_THREADS}
+export SINGULARITYENV_XGBOOST_NUM_THREADS=${SINGULARITYENV_OMP_NUM_THREADS}
+export SINGULARITYENV_PROJ_NETWORK=OFF
+export SINGULARITYENV_GDAL_CACHEMAX=1024
+
+# Execute
+singularity exec --cleanenv \
+  --bind "$PROJECT":/work/project,"$INPUTS":/work/inputs,"$OUTPUTS":/work/outputs \
+  "$SIF" \
+  bash -lc "python /work/project/src/process.py /work/inputs /work/outputs"</code></pre>
+        <p>Replace the final command with <code>Rscript</code> if running an R pipeline.</p>
+
+        <h3>7.3 Job arrays</h3>
+        <pre><code class="language-bash">N=$(find /path/to/inputs -maxdepth 1 -type f -name '*.geojson' | wc -l)
+sbatch --array=0-$(($N-1))%16 run_container.sh</code></pre>
+        <p>Inside your script, use <code>${SLURM_ARRAY_TASK_ID}</code> to index the input list.</p>
+      </section>
+
+      <section id="reproducibility">
+        <h2>8. Reproducibility and provenance</h2>
+        <ul>
+          <li><strong>Pin versions:</strong> use <code>requirements.txt</code> for Python and <code>renv.lock</code> for R. Restore them during the Docker build for deterministic environments.</li>
+          <li><strong>Record digests:</strong> store the image digest (sha256) alongside job outputs.</li>
+          <li><strong>Log runtime environment:</strong> at job start, record <code>sessionInfo()</code> (R) or <code>pip freeze</code> (Python). For geospatial stacks log <code>gdalinfo --version</code> and (in R) <code>sf::sf_extSoftVersion()</code>.</li>
+          <li><strong>Architecture awareness:</strong> build for <code>linux/amd64</code> unless your HPC documents a different architecture.</li>
+        </ul>
+      </section>
+
+      <section id="pitfalls">
+        <h2>9. Common pitfalls (and remedies)</h2>
+        <ul>
+          <li><strong>Oversubscription:</strong> set thread environment variables based on <code>--cpus-per-task</code>.</li>
+          <li><strong>Mixed GDAL/PROJ builds:</strong> Python wheels may bundle GDAL while CLI tools use system GDAL. Test both during build and validation.</li>
+          <li><strong>Private registries:</strong> authenticate via <code>SINGULARITY_DOCKER_USERNAME</code>/<code>SINGULARITY_DOCKER_PASSWORD</code> before pulling images.</li>
+          <li><strong>Network-restricted nodes:</strong> pull on the login node and reference the local <code>.sif</code> file in jobs.</li>
+          <li><strong>Permissions:</strong> Singularity runs as your user by default; write to scratch or project directories you own.</li>
+        </ul>
+      </section>
+
+      <section id="checklist">
+        <h2>10. Minimal end-to-end checklist</h2>
+        <ol>
+          <li>Write a <code>Dockerfile</code> with required system and language packages.</li>
+          <li><code>docker buildx build --platform linux/amd64 -t &lt;repo&gt;:&lt;tag&gt; --load .</code></li>
+          <li><code>docker push &lt;repo&gt;:&lt;tag&gt;</code></li>
+          <li>On HPC: <code>singularity pull .sif docker://&lt;repo&gt;:&lt;tag&gt;</code></li>
+          <li>Submit a SLURM job that binds project paths and forwards thread environment variables.</li>
+        </ol>
+        <p>This pattern is robust across diverse clusters and workflows. Tailor package lists and SLURM directives to match your project.</p>
+      </section>
+
+      <a class="back-link" href="index.html">&larr; Back to tutorial library</a>
+    </article>
+  </main>
+</body>
+</html>
