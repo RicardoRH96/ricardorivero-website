@@ -124,6 +124,7 @@ a:hover {
   justify-content: center;
   align-items: center;
   padding: calc(var(--nav-height) + 60px) 6vw 80px;
+  scroll-margin-top: calc(var(--nav-height) + 24px);
   position: relative;
 }
 
@@ -456,6 +457,10 @@ a:hover {
 }
 
 @media (max-width: 960px) {
+  :root {
+    --nav-height: 86px;
+  }
+
   .nav {
     width: calc(100% - 8vw);
   }
@@ -476,6 +481,10 @@ a:hover {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --nav-height: 140px;
+  }
+
   .nav {
     flex-direction: column;
     align-items: flex-start;
